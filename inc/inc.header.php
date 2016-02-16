@@ -39,6 +39,7 @@
                     <nav>
                         <ul class="nav nav-pills pull-right">
                             <li class="active" role="presentation"><a href="index.php">Home</a></li>                        
+                            <li class="active" role="presentation"><a href="user_index.php">User Data</a></li>                        
                             <li class="active" role="presentation"><a href="logout.php?logout">Logout</a></li>                        
                         </ul>
                     </nav>

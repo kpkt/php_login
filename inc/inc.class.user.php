@@ -20,6 +20,7 @@
 class User {
 
     private $db;
+    private $staticKey;
 
     /**
      * Construct
@@ -27,24 +28,28 @@ class User {
      */
     function __construct($dbCon) {
         $this->db = $dbCon;
+        /**
+         * 
+         * Nota : PHP mencadangkan supaya password_hash 
+         * menjana sendiri salt secara rawak
+         * Contoh 'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
+         * Tetapi dalam contoh ini menggunakan static salt dan 
+         * anda akan menghadapi masalah jikasalt diubah
+         * untuk login pengguna sedia ada.
+         * Pilihan di tangan anda......
+         * 
+         */
+        $this->staticKey = "AZBCG93b0qyJfIxfs2guaoUubKwvniR2G0FgaC9mu";
     }
 
     /**
-     * 
-     * Nota : PHP mencadangkan supaya password_hash 
-     * menjana sendiri salt secara rawak
-     * Contoh 'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
-     * Tetapi dalam contoh ini menggunakan static salt dan 
-     * anda akan menghadapi masalah jikasalt diubah
-     * untuk login pengguna sedia ada.
-     * Pilihan di tangan anda......
      * @param type $upass
      * 
      */
     private function pwd_salt($upass) {
         $options = [
             'cost' => 12,
-            'salt' => "AZBCG93b0qyJfIxfs2guaoUubKwvniR2G0FgaC9mu",
+            'salt' => $this->staticKey,
                 //'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
         ];
         return $salPassword = password_hash($upass, PASSWORD_BCRYPT, $options);
@@ -83,14 +88,13 @@ class User {
      * @param type $fpass
      * @return boolean
      */
-    public function login($femail, $fpass) {
-
+    public function login($femail, $upass) {
         try {
             $stmt = $this->db->prepare("SELECT * FROM users WHERE email=:email LIMIT 1");
             $stmt->execute(array(':email' => $femail));
             $userRow = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($stmt->rowCount() > 0) {
-                if (password_verify($fpass, $userRow['pwd'])) {
+                if (password_verify($upass, $userRow['pwd'])) {
                     $_SESSION['user_session'] = array(
                         'id' => $userRow['id'],
                         'name' => $userRow['name'],

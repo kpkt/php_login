@@ -34,5 +34,7 @@ try {
     echo $e->getMessage();
 }
 
+include_once 'inc.class.crud.php';
+$crud = new Crud($dbCon);
 include_once 'inc.class.user.php';
 $user = new User($dbCon);

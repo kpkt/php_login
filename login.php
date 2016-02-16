@@ -10,6 +10,7 @@
 
 /*
  * @name Index/Login Page 
+ * 
  */
 ?>
 <?php
@@ -30,6 +31,7 @@ if ($user->is_loggedin() != "") {
     $user->redirect('main.php');
 }
 
+
 /**
  * Before Login
  */
@@ -39,15 +41,16 @@ if (isset($_POST['btn-login'])) {
     if ($user->login($femail, $upass)) {
         $user->redirect('home.php');
     } else {
-        header("Location: index.php?failure");
+        $error = 'false';
+        //header("Location: index.php?error");
     }
 }
 ?>
 <div class="row mzm">   
     <div class="col-md-offset-3 col-md-6">
         <?php
-        if (isset($_GET['failure'])) {
-            echo '<div class="alert alert-danger">Wrong Email/Password. Please try agian. <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></div>';
+        if (isset($error)) {
+            echo '<div class="alert alert-danger">Wrong Email/Password. Please try agian.<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></div>';
         }
         ?>
         <h3 class="text-login"><?php echo 'Login' ?></h3>
@@ -56,7 +59,7 @@ if (isset($_POST['btn-login'])) {
             <div class="form-group form-group-lg">
                 <label for="inputEmail" class="col-sm-3 control-label">Email</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control"  name="femail" placeholder="Email" required>
+                    <input type="email" class="form-control"  name="femail" placeholder="Email" required>
                 </div>
             </div>
             <div class="form-group form-group-lg">

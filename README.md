@@ -30,15 +30,6 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 
--- 
--- Dumping data for table `users`
--- 
-
-INSERT INTO `users` VALUES (1, 'Nur Azyani bin Abdul Manaf','azyani@gmail.com','0113456789');
-INSERT INTO `users` VALUES (2, 'Nurul Annisa Anuar','annisa@gmail.com','0123456789');
-INSERT INTO `users` VALUES (3, 'Saifullah Poniman','saifullah@gmail.com','0133456789');
-INSERT INTO `users` VALUES (4, 'Mohd Salleh Daim','salled.daim@gmail.com','0143456789');
-
 ```
 
 # Directory
@@ -63,6 +54,7 @@ css/
    --style.css
 inc/
    --inc.dbconfig.php
+   --inc.class.crud.php  
    --inc.class.user.php  
    --inc.footer.php
    --inc.header.php
